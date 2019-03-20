@@ -34,25 +34,30 @@
   
       var map;
       function initMap() {
+   
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 30.2691, lng: -97.7457},
+          center: {lat: 20.2691, lng: 97.7457},
           zoom: 4,
           mapTypeId: 'terrain',
           disableDefaultUI: true
         });
         infoWindow = new google.maps.InfoWindow;
 
+        var pos = {};
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            // console.log(position)
+            pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-
+            console.log(pos, 'line 54')
+          
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             infoWindow.open(map);
             map.setCenter(pos);
+           
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -62,6 +67,7 @@
         }
         google.maps.event.addListener(map, 'click', function( event ){
   alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+  
 });
 
       
@@ -77,7 +83,7 @@
 
   // Create the polyline and add the symbol to it via the 'icons' property.
   var line = new google.maps.Polyline({
-    path: [{lat: 30.2691, lng: -97.7457}, {lat:  33.2436, lng:  -111.115}],
+    path: [pos, {lat:  33.2436, lng:  -111.115}],
     icons: [{
       icon: lineSymbol,
       offset: '100%'
@@ -107,3 +113,7 @@ function animateCircle(line) {
   </body>
 </body>
 </html>
+
+
+
+
